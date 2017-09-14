@@ -1,0 +1,473 @@
+HTML5结构
+h1~h6、header、nav、main、article、section、aside、footer及div元素
+
+h1~h6
+1、不要使用h1~h6标记副标题、标语以及无法成为独立标题的子标题。例如，假设有一篇新闻报道，它的主标题后面紧跟着一个副标题，这时，这个副标题就应该使用段落或其他非标题元素。如下例1：
+<h1>Giraffe Escapes from Zoo</h1>
+<p class=”subhead”>Animals Worldwide Rejoice</p>
+
+<p>…story content…</p>
+…
+上面的例子是标记副标题的一种方法。可以添加一个class，从而能应用相应的CSS。
+
+header页眉
+如果页面中有一块包含一组介绍性或导航性内容的区域，应该使用header对其进行标记。
+通常，页眉包括网站标志、主导航和其他全站链接，甚至搜索框。这是header的最常见使用形式，不过不要误认为是唯一的使用形式。
+如下，例2
+...
+<body>
+<header role="banner">
+<nav>
+<ul>
+<li><a href="#gaudi">Barcelona's
+➝ Architect</a></li>
+<li lang="es"><a href="#sagrada-
+➝ familia">La Sagrada Família</a>
+➝ </li>
+<li><a href="#park-guell">Park
+➝ Guell</a></li>
+</ul>
+</nav>
+</header>
+</body>
+</html>
+上面例子中header代表整个页面的页眉。它包含一组代表整个页面主导航的链接（在nav元素中）。可选的role=“banner”并不适用于所有页眉。它显式地指出该页眉为页面级页眉，因此可以提高访问性。
+
+header也很适合对页面深处的一组介绍性或导航性内容进行标记。例如，一个区块的目录，
+例3
+...
+<body>
+<header role="banner">
+... [网站标识、导航等] ...
+</header>
+<main role="main">
+<article>
+<header>
+<h1>Frequently Asked Questions</h1>
+<nav>
+<ul>
+<li><a href="#answer1">What is
+➝ your return policy?</a><li>
+<li><a href="#answer2">How do I
+➝ find a location?</a><li>
+...
+</ul>
+</nav>
+</header>
+<!-- 第二个header的链接指向这里 -->
+<article id="answer1">
+<h2>What is your return policy?</h2>
+<p> ... [答案] ... </p>
+</article>
+<article id="answer2">
+<h2>How do I find a location?</h2>
+<p> ... [答案] ... </p>
+</article>
+...
+</article> <!-- 结束父元素article -->
+</main>
+</body>
+</html>
+上面这个页面有两个header，一个是整个页面的，一个是Frequently Asked Questions<的父元素article的。注意第一个header并不包含h1~h6，而第二个有。而且只有第一个header中有role=”banner”，因为它是页面级的页眉。
+Header通常包含其自身的标题（h1~h6），但这不是强制性的。
+提示：
+1、只在必要时使用header。大多数情况下，如果h1~h6能满足需求，就没有必要用header将其包起来。
+2、Header与h1~h6元素中的标题是不能换的，它们都有各自的语义目的。
+3、不能在header里嵌套footer元素或另一个header，也不能在address或footer元素里嵌套header。
+4、Header不一定像示例那样包含一个nav元素（如例2和例3），不过在大多数情况下，如果header包含导航性链接，就可以用nav。在例3中，nav包住Frequently Asked Questions链接列表是恰当的，因为它是页面内的主要导航组。
+  
+nav
+对文档中重要的链接群使用nav，nav中的链接可以指向页面中的内容，也可以指向其他页面或资源，或者两者兼有之。
+例4
+...
+<body>
+<header role="banner">
+<nav role="navigation">
+<ul>
+<li><a href="#gaudi">Barcelona's
+➝ Architect</a></li>
+<li lang="es"><a href="#sagrada-
+➝ familia">La Sagrada Família</a>
+➝ </li>
+<li><a href="#park-guell">Park
+➝ Guell</a></li>
+</ul>
+</nav>
+</header>
+</body>
+</html>
+上例中，这些链接（a元素）代表一组重要的导航，因此将他们放入一个nav元素。role元素并不是必需的，不过它可以提高访问性。
+
+HTML5规范不推荐对辅助性页脚链接（如“使用条款”、“隐私政策”等）使用nav，这不难理解。不过，有时页脚会再次显示顶级全局导航，或者包含“商店位置”、“招聘信息”等重要链接。在大多数情况下，我们推荐将页脚中的此类链接放入nav中。
+
+HTML5不允许将nav嵌套在address中。
+
+如何判断是否对一组链接使用nav呢？归根结底，这取决于内容的组织情况。至少，应该将网站全局导航（让用户可以跳至网络各个主要部分的导航）标记为nav。这种nav通常（但并不总是）出现在页面级的header元素里。
+例5
+...
+<body>
+<!-- ==== 开始页面级页眉 ==== -->
+<header role="banner">
+<!-- 站点标识可以放在这里 -->
+<!-- 全站导航 -->
+<nav role="navigation">
+<ul> ... </ul>
+</nav>
+</header>
+<!-- ==== 开始主要内容 ==== -->
+<main role="main">
+<h1>Arts & Entertainment: Museums
+➝ </h1>
+<article>
+<h2>Gallery Opening Features the
+➝ Inspired, Inspiring</h2>
+<p>... [故事内容] ... </p>
+</article>
+<aside>
+<h2>Other Stories</h2>
+<!-- 没有包含在nav里 -->
+<ul> ... [故事链接] ... </ul>
+</aside>
+</main>
+<!-- ==== 开始附注栏 ==== -->
+<aside>
+<!-- 次级导航 -->
+<nav role="navigation">
+<ul>
+<li><a href="/arts/movies/">
+➝ Movies</a></li>
+<li><a href="/arts/music/">
+➝ Music</a></li>
+...
+</ul>
+</nav>
+</aside>
+<!-- ==== 开始页面级页脚 ==== -->
+<footer role="contentinfo">
+<!-- 辅助性链接并未包在nav中 -->
+<ul> ... </ul>
+</footer>
+</body>
+</html>
+在上面的这个例子中，只有两组链接放在nav里，另外两组由于不是主要的导航而没放在nav里。
+
+
+main（主要内容）
+一个网页只有一个部分代表其主要内容。可以将这样的内容包在mian元素中，该元素在一个页面仅使用一次。
+例6
+...
+<body>
+<header role="banner">
+<nav role="navigation">
+... [包含多个链接的ul] ...
+</nav>
+</header>
+<main role="main">
+<article>
+<h1 id="gaudi">Barcelona's Architect
+➝ </h1>
+<p>Antoni Gaudí's incredible
+➝ buildings bring millions ...</p>
+... [页面主要区域的其他内容] ...
+</article>
+</main>
+<aside role="complementary">
+<h1>Architectural Wonders of Barcelona
+➝ </h1>
+... [附注栏的其他内容] ...
+</aside>
+<footer role="contentinfo">
+... [版权] ...
+</footer>
+</body>
+</html>
+main元素包围着代表页面主题的内容。最好在main开始标签中加上role=“main”。
+
+不能将main放置在article、aside、footer、header或nav元素中。如例6所示，role=“main”可以帮助屏幕阅读器定位页面的主要区域。
+
+article
+HTML5对article元素的定义如下，
+article元素表示文档、页面、应用或网站中一个独立的容器，原则上是可独立分配或可再用的，就像聚合内容中的各部分。它可以是一篇论坛帖子、一篇杂志或报纸文章、一篇博客条目、一则用户提交的评论、一个交互式的小部件或小工具，或者其他独立的内容项。
+其他article的例子包括电影或音乐评论、案例研究、产品描述，等等。你或许惊讶于它还可以是交互式的小部件或小工具，不过这些确实是独立的、可再分配的内容项。
+提示：
+可以将article嵌套在另一个article中，只要里面的article与外面的article是部分与整体的关系。
+一个页面可以有多个article元素（也可以没有）。例如，博客的主页通常包括几篇最新的文章，其中每一篇都是自身的article。
+一个article可以包含一个或多个section元素。在article里包含独立的h1~h6也是很好的做法。
+
+section
+HTML5对section元素的部分定义如下，
+section元素代表文档或应用的一个一般的区块。在这里，sectioon是具有相似主题的一组内容，通常包含一个标题。
+section的例子中包含章节、标签式对话框中的各种标签页、论文中带编号的区块。比如网站的主页可以分为介绍、新闻条目、联系信息等区块。
+尽管我们将section定义成“通用的”区块，但不要将它与div元素混淆。从语义上讲，section标记的是页面中特定的区域，而div则不传达任何语义。
+例7
+...
+<body>
+...
+<main role="main">
+<h1>Latest World News</h1>
+<section>
+<h2>Breaking News</h2>
+<ul>... [标题列表] ...</ul>
+</section>
+<section>
+<h2>Business</h2>
+<ul>... [标题列表] ...</ul>
+</section>
+<section>
+<h2>Arts</h2>
+<ul>... [标题列表] ...</ul>
+</section>
+</main>
+...
+</body>
+</html>
+几乎新闻网站都会对新闻进行分类。每个类别都可以标记为一个section。
+提示：
+如果只是出于添加样式的原因要对内容添加一个容器，应使用div而不是section。
+可以将section嵌套在article里，从而显示地标出报告、故事、手册等文章的文章的不同部分或不同的章节。
+在考虑如何使用section的时候，记住定义中“具有相似主题的一组内容”这一条是很有帮助的。这也是section区别于div的另一个原因。
+Section和article的区别在于，section本质上组织性和结构性更强，而article代表的是自包含的容器。		
+
+aside（附注栏）
+使用aside的例子还包括重要引述、侧栏、指向相关文章的一组链接（通常针对新闻网站）、广告、nav元素组（如博客的友情链接），Twitter源、相关产品列表（通常针对电子商务网站），等等。
+尽管我们很容易将aside元素看做侧栏，但该元素其实可以用在页面很多地方，具体依上下文而定。如果aside嵌套在页面主要内容内（而不是作为侧栏位于主要内容之外），则其中的内容应与其所在内容密切相关，而不是仅与页面整体内容相关。
+例8
+...
+<body>
+<header role="banner">
+<nav role="navigation">
+... [包含多个链接的ul] ...
+</nav>
+</header>
+<main role="main">
+<article>
+<h1 id="gaudi">Barcelona's Architect</h1>
+... [文章的其他部分] ...
+</article>
+</main>
+<aside role="complementary">
+<h1>Architectural Wonders of Barcelona</h1>
+<p>Barcelona is home to many architectural wonders in addition to Gaudí's work. Some of them include:</p>
+<ul>
+<li lang="es">Arc de Triomf</li>
+<li>The cathedral <span lang="es">(La Seu)</span></li>
+<li lang="es">Gran Teatre del Liceu</li>
+<li lang="es">Pavilion Mies van der Rohe</li>
+<li lang="es">Santa Maria del Mar</li>
+</ul>
+<p><small>Credit: <a href="http://www.barcelona.de/en/barcelona-architecture-buildings.html"
+➝ rel="external"><cite>Barcelona.de</cite></a>.</small></p>
+</aside>
+</body>
+</html>
+这个aside是有关巴塞罗那建筑奇迹的信息，与页面主要关注的Antoni Gaudí内容相关性稍差，且可以在这个没有上下文的情况下独立存在。可以将它嵌套在article里面，因为它们是相关的，但最终将它放在了article后面，使用CSS让它看起来像侧栏。Aside里面的role=”complementary”是可选的，但它可以提高访问性。
+
+提示：
+1、在HTML中，应该将附注栏内容放在main的内容之后。出于SEO和可访问性的目的，最好将重要的内容放在前面。可以通过CSS改变它们在浏览器中的显示顺序。
+2、对于与内容有关的图像（如图表、图形或带说明文字的插图），使用figure而非aside。
+3、HTML5不允许将aside嵌套在address元素内。
+
+其他aside 的例子
+上面提到，aside 可以嵌套在主要内容里面，也可以位于主要内容外面。
+案例1（嵌套在主要内容中）
+...
+<body>
+<main role="main">
+<article>
+<h1>The Diversity of Papua New Guinea</h1>
+... [ 文章内容] ...
+<aside>
+<h2>Papua New Guinea Quick Facts</h2>
+<ul>
+<li>The country has 38 of the 43 known birds of paradise</li>
+<li>Though quite tropical in some regions, others occasionally
+➝experience snowfall.</li>
+...
+</ul>
+</aside>
+... [ 更多文章内容] ...
+</article>
+</main>
+</body>
+</html>
+如果这个article 要包含一个重要引述，也应该包在aside 里。也可以弄一个“相关故事”
+的aside，包含一组指向关于该国家的其他文章的链接。另外，aside 还可以成为页面的另一
+个区块，而不是嵌套在main 中的article 里。
+我们已看到了aside 位于附注栏的例子（例8）。现在，考虑一套设计
+作品或一组案例研究，其中每个HTML 页面展示一个项目，并在毗邻的一栏中（显示位置由CSS 控制，而不是由案例2 中的代码控制）提供指向其他项目页面的链接（嵌套在nav 中）。
+
+案例2（aside 并未嵌套在主要内容中，且包含一个nav）
+...
+<body>
+<main role="main">
+<article>
+<h1>... [ 项目名称] ...</h1>
+<figure>... [ 项目图片] ...</figure>
+<p>... [ 项目报道] ...</p>
+</article>
+</main>
+<!-- 这个附注栏没有嵌套在主要内容中 -->
+<aside>
+<h2>Other Projects</h2>
+<nav>
+<ul>
+<li><a href="habitat-for-humanity.html">Habitat for Humanity
+➝brochure</a></li>
+<li><a href="royal-philharmonic.html">Royal Philharmonic Orchestra
+➝website</a></li>
+...
+</ul>
+</nav>
+</aside>
+</body>
+</html>
+这个aside 位于article 的外面，因为它与页面整体内容相关，但与article 的内容相关
+性没那么强。
+
+footer页脚
+HTML5的页脚同header一样，还可以用在其他地方。
+footer元素代表嵌套它的最近的article、aside、blockquote、body、details、fieldset、figure、nav、section或td元素的页脚。
+只有当它的祖先是body时，它才是整个页面的页脚。
+如果一个footer包含着它所在区块（如一个article）的所有内容，它代表的是像附录、索引、版权页、许可协议这样的内容。
+
+提示：
+页脚通常包含关于它所在区块的信息，如指向相关文档的链接、版权信息、作者及其他类似条目。
+页脚不一定要位于所在元素的末尾，不过通常是这样的。
+
+例9
+...
+<body>
+<header role="banner">
+<nav role="navigation">
+... [包含链接的无序列表] ...
+</nav>
+</header>
+<main role="main">
+<article>
+<h1 id="gaudi">Barcelona's Architect
+➝ </h1>
+... [文章的其他部分] ...
+<h2 id="sagrada-familia" lang="es">
+➝ La Sagrada Família</h2>
+... [图像和段落] ...
+<h2 id="park-guell">Park Guell</h2>
+... [其他图像和段落] ...
+</article>
+</main>
+<aside role="complementary">
+<h1>Architectural Wonders of Barcelona
+➝ </h1>
+... [附注栏的其他部分] ...
+</aside>
+<footer>
+<p><small>&copy; Copyright All About
+➝ Gaudí</small></p>
+</footer>
+</body>
+</html>
+这个footer代表整个页面的页脚，因为它最近的祖先是body元素。现在，页面有了header、nav、main、article、aside和footer元素。并非每个页面都需要以上元素，但它们确实代表了HTML中的主要页面构成元素。
+
+提示：
+1、不能在footer里嵌套header或另一个footer。同时，也不能将footer嵌套在header或address元素里。
+
+其他footer 示例
+我们已经学习了页面级footer 的一个小例子（案例3和案例4）。案例3 是另一
+个页面级footer 的例子，不过其中的内容更多一些。
+案例4 展示了位于页面区块article 中的一个footer，以及作为整个页面页脚的另一
+个footer。
+注意只有页面级页脚有role="contentinfo"。
+案例3
+...
+<body>
+... [包含全局导航的页面级页眉] ...
+... [页面内容] ...
+<!-- 这是一个页面级的页脚，因为它最近的祖先元素
+是body -->
+<footer role="contentinfo">
+<p><small>&copy; Copyright 2014 The
+➝ Corporation, Inc.</small></p>
+<ul>
+<li><a href="terms-of-use.html">
+➝ Terms of Use</a></li>
+<li><a href="privacy-policy.html">
+➝ Privacy Policy</a></li>
+</ul>
+</footer>
+</body>
+</html>
+页面级的footer通常包含版权信息以及不属于页面全导航（位于header里）的一些链接。
+
+案例4
+...
+<body>
+...
+<article>
+<h1>... [文章标题] ...</h1>
+<p>... [文章内容] ...</p>
+<!-- 文章的页脚 -->
+<footer>
+<p>Leandra Allen is a freelance
+➝ journalist who earned her
+➝ degree in anthropology from the
+➝ University of Copenhagen.</p>
+<address>
+You may reach her at
+➝ <a href="mailto:leandra@
+➝ therunningwriter.com">
+➝ leandra@therunningwriter.com
+➝ </a>.
+</address>
+</footer>
+</article>
+<!-- 页面级页脚 -->
+<footer role="contentinfo">
+... [版权信息等] ...
+</footer>
+</body>
+</html>
+第一个footer包含在article内，	因此是属于article的页脚。第二个footer是页面级的。只能对页面级的footer使用role=”contentinfo”，而且一个页面只能使用一次。
+
+创建通用容器div
+有时候需要在一段内容外围包一个容器，从而可以为其应用CSS样式或JavaScript效果。如果没有这个容器，页面就会不一样。在评估内容的时候，考虑使用article、section、aside、nav等元素，却发现它们从语义上都不合适。
+这时，你真正需要的是一个通用容器，一个完全没有任何语义含义的容器。这个容器就是div元素。有了div，就可以为其添加样式或JavaScript效果了。
+
+例10
+...
+<body>
+<div>
+<header role="banner">
+<nav role="navigation">
+... [包含多个链接的无序列表] ...
+</nav>
+</header>
+<main role="main">
+<article>
+<h1 id="gaudi">Barcelona's
+➝ Architect</h1>
+... [文章的其余内容] ...
+<h2 id="sagrada-familia" lang="es">
+➝ La Sagrada Família</h2>
+... [图像和段落] ...
+<h2 id="park-guell">Park Guell</h2>
+... [另一个图像和段落] ...
+</article>
+</main>
+<aside role="complementary">
+<h1>Architectural Wonders of
+➝ Barcelona</h1>
+... [aside的其余内容] ...
+</aside>
+<footer role="contentinfo">
+<p><small>&copy; Copyright All About
+➝ Gaudí</small></p>
+</footer>
+</div>
+</body>
+</html>
+现有一个div包着所有的内容。页面的语义没有发生变化，但现在我们有了一个可以用CSS添加样式的通用容器了。
+
+提示：
+1、div自身没有任何默认样式，只是包含的内容从新的一行开始。不过，我们可以对div添加样式以实现自己的设计。
+2、同header、footer、main、article、section、aside、nav、h1~h6、p和其他很多元素一样，默认情况下，div从新的一行开始显示。
+3、Div对使用JavaScript实现一些特定的交互行为或效果也是有帮助的。例如，在页面中展示一张照片或一个对话框，同时让背景页面覆盖一个半透明的层（这个层通常是一个div）。
+4、尽管我们始终强调HTML用于对内容的含义进行描述，但div并不是唯一没有语义家指定元素。span是与div对应的一个元素：div是块级内容的无语义容器，而span则是短语内容的无语义容器，例如它可以放在段落元素P之内。
